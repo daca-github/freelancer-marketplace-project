@@ -1,76 +1,61 @@
 import React, { useState } from 'react';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 function Login() {
-    const [isRegistering, setIsRegistering] = useState(false);
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [username, setUsername] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
+    const [isLogin, setIsLogin] = useState(true);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (isRegistering) {
-            if (password !== confirmPassword) {
-                alert("Passwords don't match!");
-                return;
-            }
-            // Handle registration logic
-        } else {
-            // Handle login logic
+    const formik = useFormik({
+        initialValues: {
+            name: '',
+            email: '',
+            password: ''
+        },
+        validationSchema: Yup.object({
+            name: isLogin ? Yup.string() : Yup.string().required('Name is required'),
+            email: Yup.string().email('Invalid email address').required('Email is required'),
+            password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required')
+        }),
+        onSubmit: values => {
+            console.log(values);
         }
-    };
+    });
 
     return (
-        <div className="auth-container">
-            <h2>{isRegistering ? "Register" : "Login"}</h2>
-            <form onSubmit={handleSubmit}>
-                {isRegistering && (
-                    <div className="input-group">
-                        <label>Username</label>
-                        <input 
-                            type="text" 
-                            value={username} 
-                            onChange={(e) => setUsername(e.target.value)} 
-                            required 
+        <div>
+            <h2>{isLogin ? "Login" : "Register"}</h2>
+            <form onSubmit={formik.handleSubmit}>
+                {!isLogin && (
+                    <div>
+                        <input
+                            type="text"
+                            placeholder="Name"
+                            {...formik.getFieldProps('name')}
                         />
+                        {formik.touched.name && formik.errors.name ? <div>{formik.errors.name}</div> : null}
                     </div>
                 )}
-                <div className="input-group">
-                    <label>Email</label>
-                    <input 
-                        type="email" 
-                        value={email} 
-                        onChange={(e) => setEmail(e.target.value)} 
-                        required 
+                <div>
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        {...formik.getFieldProps('email')}
                     />
+                    {formik.touched.email && formik.errors.email ? <div>{formik.errors.email}</div> : null}
                 </div>
-                <div className="input-group">
-                    <label>Password</label>
-                    <input 
-                        type="password" 
-                        value={password} 
-                        onChange={(e) => setPassword(e.target.value)} 
-                        required 
+                <div>
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        {...formik.getFieldProps('password')}
                     />
+                    {formik.touched.password && formik.errors.password ? <div>{formik.errors.password}</div> : null}
                 </div>
-                {isRegistering && (
-                    <div className="input-group">
-                        <label>Confirm Password</label>
-                        <input 
-                            type="password" 
-                            value={confirmPassword} 
-                            onChange={(e) => setConfirmPassword(e.target.value)} 
-                            required 
-                        />
-                    </div>
-                )}
-                <button type="submit" className="button">{isRegistering ? "Register" : "Login"}</button>
+                <button type="submit">{isLogin ? "Login" : "Register"}</button>
             </form>
-            {isRegistering ? (
-                <p>Already have an account? <button onClick={() => setIsRegistering(false)}>Login</button></p>
-            ) : (
-                <p>Don't have an account? <button onClick={() => setIsRegistering(true)}>Register</button></p>
-            )}
+            <button onClick={() => setIsLogin(!isLogin)}>
+                {isLogin ? "Need an account? Register" : "Already have an account? Login"}
+            </button>
         </div>
     );
 }
