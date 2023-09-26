@@ -1,4 +1,5 @@
 import React from 'react';
+import './styles/ProjectListing.css';
 
 function ProjectListing() {
   // Static data for now. This will be fetched from the backend later.
@@ -8,15 +9,15 @@ function ProjectListing() {
   ];
 
   return (
-    <div>
+    <div className="project-listing-container">
       <h2>Available Projects</h2>
-      <ul>
+      <div className="projects-grid">
         {projects.map(project => (
-          <li key={project.id}>
+          <div key={project.id} className="project-card">
             <a href={`/projects/${project.id}`}>{project.title}</a>
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
