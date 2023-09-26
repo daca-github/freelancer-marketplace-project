@@ -5,20 +5,21 @@ import FreelancerProfile from './FreelancerProfile';
 import ProjectListing from './ProjectListing';
 import ProjectDetails from './ProjectDetails';
 import Login from './Login';
-import Register from './Register';
+import './styles/App.css';
 
 function App() {
   return (
     <Router>
       <Navbar />
-      <Switch>
-        <Route path="/" exact component={Home} />
-        <Route path="/freelancers/:id" component={FreelancerProfile} />
-        <Route path="/projects" exact component={ProjectListing} />
-        <Route path="/projects/:id" component={ProjectDetails} />
-        <Route path="/login" component={Login} />
-        <Route path="/register" component={Register} />
-      </Switch>
+      <div className="container">
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/freelancers/:id" component={FreelancerProfile} />
+          <Route path="/projects" exact component={ProjectListing} />
+          <Route path="/projects/:id" component={ProjectDetails} />
+          <Route path="/login" component={Login} />
+        </Switch>
+      </div>
     </Router>
   );
 }
