@@ -10,6 +10,7 @@ function ProjectListing() {
   
 
   return (
+    <div className="home-container fade-in">
     <div className="project-listing-container">
       <h2>Available Projects</h2>
       <div className="projects-grid">
@@ -21,6 +22,7 @@ function ProjectListing() {
         ))}
       </div>
     </div>
+  </div>
   );
   
 }
