@@ -12,8 +12,8 @@ class User(db.Model, SerializerMixin):
     password_hash = db.Column(db.String(128))
     is_freelancer = db.Column(db.Boolean, default=False)
     
-    projects = db.relationship('Project', backref='client', lazy=True)
-    reviews = db.relationship('Review', backref='freelancer', lazy=True)
+    projects_posted = db.relationship('Project', backref='freelancer', lazy=True)
+    client_reviews = db.relationship('Review', backref='client', lazy=True)
 
     @property
     def password(self):
@@ -32,8 +32,8 @@ class User(db.Model, SerializerMixin):
             'username': self.username,
             'email': self.email,
             'is_freelancer': self.is_freelancer,
-            'projects': [project.serialize() for project in self.projects],
-            'reviews': [review.serialize() for review in self.reviews]
+            'projects_posted': [project.serialize() for project in self.projects_posted],
+            'client_reviews': [review.serialize() for review in self.client_reviews]
         }
 
 class Project(db.Model, SerializerMixin):
@@ -43,7 +43,7 @@ class Project(db.Model, SerializerMixin):
     title = db.Column(db.String(200), nullable=False)
     description = db.Column(db.Text, nullable=True)
     image = db.Column(db.String(500), nullable=True)
-    client_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    freelancer_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
     def serialize(self):
         return {
@@ -51,7 +51,7 @@ class Project(db.Model, SerializerMixin):
             'title': self.title,
             'description': self.description,
             'image': self.image,
-            'client_id': self.client_id
+            'freelancer_id': self.freelancer_id
         }
 
 class Review(db.Model, SerializerMixin):
@@ -59,11 +59,11 @@ class Review(db.Model, SerializerMixin):
     
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=False)
-    freelancer_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    client_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
     def serialize(self):
         return {
             'id': self.id,
             'content': self.content,
-            'freelancer_id': self.freelancer_id
+            'client_id': self.client_id
         }
