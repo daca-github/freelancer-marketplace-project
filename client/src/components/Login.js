@@ -6,6 +6,7 @@ import './styles/Login.css';
 
 function Login() {
     const [isLogin, setIsLogin] = useState(true);
+    const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem('user')));
 
     const formik = useFormik({
         initialValues: {
@@ -36,6 +37,20 @@ function Login() {
                 });
         }
     });
+
+    const handleLogout = () => {
+        localStorage.removeItem('user');
+        setCurrentUser(null);
+    };
+
+    if (currentUser) {
+        return (
+            <div className="home-container fade-in">
+                <h2>Welcome, {currentUser.username}!</h2>
+                <button onClick={handleLogout} className="button">Logout</button>
+            </div>
+        );
+    }
 
     return (
         <div className="home-container fade-in">
