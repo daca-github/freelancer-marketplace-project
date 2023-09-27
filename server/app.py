@@ -1,11 +1,25 @@
 #!/usr/bin/env python3
 
-from flask import request, jsonify
+from flask import request, jsonify, session
 from flask_restful import Resource, Api
 from flask_cors import CORS
 
 from config import app, db
 from models import User, Project, Review
+from flask_session import Session
+
+app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SESSION_PERMANENT'] = False
+app.config['SESSION_USE_SIGNER'] = True
+app.config['SESSION_KEY_PREFIX'] = 'myapp'
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
+
+Session(app)
 
 api = Api(app)
 CORS(app)
@@ -94,8 +108,22 @@ def login():
     if not user or not user.verify_password(password):
         return jsonify({"message": "Invalid email or password"}), 401
 
+    session['user_id'] = user.id
     return jsonify({"message": "Login successful", "user": user.serialize()}), 200
 
+@app.route('/check_session', methods=['GET'])
+def check_session():
+    user_id = session.get('user_id')
+    if user_id:
+        user = User.query.get(user_id)
+        if user:
+            return jsonify(user.serialize())
+    return jsonify({'message': 'Not logged in'}), 401
+
+@app.route('/logout', methods=['POST'])
+def logout():
+    session.pop('user_id', None)
+    return jsonify({'message': 'Logged out successfully'}), 200
 
 if __name__ == '__main__':
     with app.app_context():
