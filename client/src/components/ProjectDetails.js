@@ -1,4 +1,5 @@
 import React from 'react';
+import './styles/ProjectListing.css'
 
 function ProjectDetails() {
   // Static data for now. This will be fetched based on project ID later.

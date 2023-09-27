@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import './styles/Login.css'
 
 function Login() {
     const [isLogin, setIsLogin] = useState(true);
