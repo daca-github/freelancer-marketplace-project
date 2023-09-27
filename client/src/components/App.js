@@ -5,6 +5,7 @@ import FreelancerProfile from './FreelancerProfile';
 import ProjectListing from './ProjectListing';
 import ProjectDetails from './ProjectDetails';
 import Login from './Login';
+import CreateProject from './CreateProject';
 import './styles/App.css';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route path="/projects" exact component={ProjectListing} />
           <Route path="/projects/:id" component={ProjectDetails} />
           <Route path="/login" component={Login} />
+          <Route path="/create-project" component={CreateProject} />
         </Switch>
       </div>
     </Router>
