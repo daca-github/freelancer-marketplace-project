@@ -24,10 +24,17 @@ function CreateProject() {
 
     const handlePostProject = (e) => {
         e.preventDefault();
+        const currentUser = JSON.parse(localStorage.getItem('user'));
+        if (!currentUser || !currentUser.id) {
+            console.error("User is not logged in or missing ID!");
+            return;
+        }
+
         axios.post('http://localhost:5555/projects', {
             title: title,
             description: description,
             image: image,
+            freelancer_id: currentUser.id
         })
         .then(response => {
             console.log(response.data);
