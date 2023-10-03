@@ -75,6 +75,7 @@ def register():
     username = data.get('name')
     email = data.get('email')
     password = data.get('password')
+    is_freelancer = data.get('is_freelancer', False)
 
     if not username or not email or not password:
         return jsonify({"message": "Missing fields"}), 400
@@ -83,7 +84,7 @@ def register():
     if user:
         return jsonify({"message": "Email already registered"}), 400
 
-    new_user = User(username=username, email=email)
+    new_user = User(username=username, email=email, is_freelancer=is_freelancer)
     new_user.password = password
     db.session.add(new_user)
     db.session.commit()
