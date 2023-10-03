@@ -62,9 +62,13 @@ def get_project_details(project_id):
 @app.route('/projects/<int:project_id>', methods=['DELETE'])
 def delete_project(project_id):
     project = Project.query.get_or_404(project_id)
+    user_id = session.get('user_id')
+    if not user_id or project.freelancer_id != user_id:
+        return jsonify({"message": "Unauthorized action"}), 403
     db.session.delete(project)
     db.session.commit()
     return jsonify({"message": "Project deleted successfully"}), 204
+
 
 @app.route('/register', methods=['POST'])
 def register():

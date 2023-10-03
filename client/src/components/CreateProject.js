@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './styles/CreateProject.css'
+import './styles/CreateProject.css';
 
 function CreateProject() {
     const [projects, setProjects] = useState([]);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState('');
+    const currentUser = JSON.parse(localStorage.getItem('user'));
 
     useEffect(() => {
         fetchProjects();
@@ -24,7 +25,6 @@ function CreateProject() {
 
     const handlePostProject = (e) => {
         e.preventDefault();
-        const currentUser = JSON.parse(localStorage.getItem('user'));
         if (!currentUser || !currentUser.id) {
             console.error("User is not logged in or missing ID!");
             return;
@@ -90,7 +90,9 @@ function CreateProject() {
                 {projects.map(project => (
                     <li key={project.id}>
                         {project.title} - {project.description}
-                        <button onClick={() => handleDeleteProject(project.id)}>Delete</button>
+                        {currentUser && project.freelancer_id === currentUser.id && (
+                            <button onClick={() => handleDeleteProject(project.id)}>Delete</button>
+                        )}
                     </li>
                 ))}
             </ul>
