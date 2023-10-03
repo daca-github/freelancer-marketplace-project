@@ -27,7 +27,8 @@ function Login() {
                 .then(response => {
                     console.log(response.data);
                     if (isLogin) {
-                        localStorage.setItem('user', JSON.stringify(response.data));
+                        localStorage.setItem('user', JSON.stringify(response.data.user));
+                        setCurrentUser(response.data.user);
                     } else {
                         setIsLogin(true);
                     }
@@ -36,6 +37,7 @@ function Login() {
                     console.error("There was an error!", error);
                 });
         }
+        
     });
 
     const handleLogout = () => {
