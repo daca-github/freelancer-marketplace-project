@@ -24,7 +24,6 @@ function ProjectDetails() {
             <img src={project.image} alt={project.title} className="project-image"/>
             </div>
             <p className="project-description">{project.description}</p>
-            <p className="project-budget">Budget: {project.budget}</p>
         </div>
     );
 }

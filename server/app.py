@@ -22,7 +22,7 @@ app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 Session(app)
 
 api = Api(app)
-CORS(app)
+CORS(app, supports_credentials=True)
 
 @app.route('/')
 def index():
@@ -63,7 +63,9 @@ def get_project_details(project_id):
 def delete_project(project_id):
     project = Project.query.get_or_404(project_id)
     user_id = session.get('user_id')
-    if not user_id or project.freelancer_id != user_id:
+    print("Session user_id:", user_id)
+    print("Project freelancer_id:", project.freelancer_id)
+    if project.freelancer_id == user_id:
         return jsonify({"message": "Unauthorized action"}), 403
     db.session.delete(project)
     db.session.commit()
@@ -114,6 +116,7 @@ def login():
         return jsonify({"message": "Invalid email or password"}), 401
 
     session['user_id'] = user.id
+    session.modified = True
     return jsonify({"message": "Login successful", "user": user.serialize()}), 200
 
 @app.route('/check_session', methods=['GET'])
