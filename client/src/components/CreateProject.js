@@ -85,7 +85,7 @@ function CreateProject() {
                 />
                 <button type="submit">Create Project</button>
             </form>
-            <h3>Your Projects</h3>
+            <h3>Projects</h3>
             <ul>
                 {projects.map(project => (
                     <li key={project.id}>
