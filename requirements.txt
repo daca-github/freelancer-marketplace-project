@@ -8,7 +8,7 @@ click==8.1.7
 decorator==5.1.1
 executing==1.2.0
 Faker==18.13.0
-Flask==2.3.3
+Flask==2.2.5
 Flask-Cors==4.0.0
 Flask-Migrate==4.0.5
 Flask-RESTful==0.3.10
