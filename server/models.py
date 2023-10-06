@@ -67,3 +67,40 @@ class Review(db.Model, SerializerMixin):
             'content': self.content,
             'client_id': self.client_id
         }
+    
+association_table = db.Table('association', 
+    db.Column('freelancer_profile_id', db.Integer, db.ForeignKey('freelancer_profiles.id')),
+    db.Column('skill_id', db.Integer, db.ForeignKey('skills.id'))
+)
+
+class Skill(db.Model, SerializerMixin):
+    __tablename__ = 'skills'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), unique=True, nullable=False)
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name
+        }
+
+class FreelancerProfile(db.Model, SerializerMixin):
+    __tablename__ = 'freelancer_profiles'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    bio = db.Column(db.Text, nullable=True)
+    total_projects_completed = db.Column(db.Integer, default=0)
+    
+    skills = db.relationship('Skill', secondary=association_table, backref='freelancers')
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'bio': self.bio,
+            'total_projects_completed': self.total_projects_completed,
+            'skills': [skill.serialize() for skill in self.skills]
+        }
+
