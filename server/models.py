@@ -104,18 +104,3 @@ class FreelancerProfile(db.Model, SerializerMixin):
             'skills': [skill.serialize() for skill in self.skills]
         }
 
-class Favorite(db.Model, SerializerMixin):
-    __tablename__ = 'favorites'
-    
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    project_id = db.Column(db.Integer, db.ForeignKey('projects.id'), nullable=True)
-    freelancer_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
-
-    def serialize(self):
-        return {
-            'id': self.id,
-            'user_id': self.user_id,
-            'project_id': self.project_id,
-            'freelancer_id': self.freelancer_id
-        }
