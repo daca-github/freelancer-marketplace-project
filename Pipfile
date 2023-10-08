@@ -16,6 +16,7 @@ flask-session = "*"
 python-dotenv = "*"
 gunicorn = "*"
 psycopg2-binary = "*"
+flask-login = "*"
 
 [requires]
 python_full_version = "3.8.13"
