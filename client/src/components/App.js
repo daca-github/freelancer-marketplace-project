@@ -10,7 +10,9 @@ import './styles/App.css';
 import React, { useState } from 'react';
 
 function App() {
-  const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem('user')));
+  const userItem = localStorage.getItem('user');
+  const parsedUser = userItem && userItem !== "undefined" ? JSON.parse(userItem) : null;
+  const [currentUser, setCurrentUser] = useState(parsedUser);
 
   return (
     <Router>

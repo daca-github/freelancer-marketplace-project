@@ -6,7 +6,10 @@ import './styles/Login.css';
 
 function Login() {
     const [isLogin, setIsLogin] = useState(true);
-    const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem('user')));
+    const userItem = localStorage.getItem('user');
+    const parsedUser = userItem && userItem !== "undefined" ? JSON.parse(userItem) : null;
+    const [currentUser, setCurrentUser] = useState(parsedUser);
+
 
     const formik = useFormik({
         initialValues: {

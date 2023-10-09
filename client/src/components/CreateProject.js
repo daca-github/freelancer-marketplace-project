@@ -7,7 +7,9 @@ function CreateProject() {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState('');
-    const currentUser = JSON.parse(localStorage.getItem('user'));
+    const userItem = localStorage.getItem('user');
+    const currentUser = userItem && userItem !== "undefined" ? JSON.parse(userItem) : null;
+
 
     useEffect(() => {
         fetchProjects();
