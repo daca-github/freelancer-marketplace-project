@@ -59,3 +59,6 @@ We value collaboration. For minor changes, feel free to open a pull request. For
 ## 📜 License
 
 This project is licensed under the MIT License. See `LICENSE.md` for more details.
+
+##[Blog Link:](https://dev.to/daca-github/integrating-flask-with-react-bridging-the-backend-frontend-divide-37pf)
+##[Video Explanation](https://www.youtube.com/watch?v=y0uLn1akYaU) 
