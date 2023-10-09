@@ -15,10 +15,7 @@ Welcome to **Freelancer Marketplace** - a platform designed to bridge the gap be
 ### Installation & Setup
 
 1. **Fork and clone the repository**:
-    ```bash
-    git clone [https://github.com/yourusername/freelancer-marketplace.git](https://github.com/daca-github/freelancer-marketplace-project)
-    ```
-
+   
 2. **Navigate to the directory**:
     ```bash
     cd freelancer-marketplace
